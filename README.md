@@ -2,6 +2,7 @@
 
 ``` mermaid
 classDiagram
+
     class User {
         - String login
         - char password
@@ -28,6 +29,8 @@ classDiagram
     class InvalidLoginException
     
     User <.. UserService : Dependency
+    UserService --> UserRepository : Association
+    
     UserService --> UserAlreadyExistsException : throws
     UserService --> UserNotFoundException : throws
     UserService --> InvalidPasswordException : throws
