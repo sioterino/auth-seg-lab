@@ -4,37 +4,64 @@
 classDiagram
 
     class User {
-        - String login
-        - char password
+        + String login
+        + String passwordHash
     }
-    
+
+    class HashAlgorithm {
+        <<interface>>
+        + String hash(String password)
+        + boolean verify(String password, String hash)
+    }
+
+    class BCryptHashAlgorithm {
+        + String hash(String password)
+        + boolean verify(String password, String hash)
+    }
+
     class UserService {
-        + UserService( String algorithm)
-        + register(String login, char currentPassword, char newPassword)
-        + updatePassword()
-        + authenticate()
+        - UserRepository repository
+        - HashAlgorithm hashAlgorithm
+        + register(String login, String password)
+        + updatePassword(String login, String currentPassword, String newPassword)
+        + authenticate(String login, String password)
     }
-    
+
     class UserRepository {
         <<interface>>
-        + List~User~ database
-        + save(User user)
-        + update(User user)
-        + findByLogin(String login) User | null
+        + void save(User user)
+        + void update(User user)
+        + User findByLogin(String login)
     }
-    
+
+    class FileUserRepository {
+        - String filePath
+        - Map<String, User> users
+        + void save(User user)
+        + void update(User user)
+        + User findByLogin(String login)
+        - Scanner scanFile()
+        - PrintWriter newPrintWriter()
+        - void loadFromFile()
+        - void saveToFile()
+    }
+
     class UserAlreadyExistsException
     class UserNotFoundException
     class InvalidPasswordException
     class InvalidLoginException
     
-    User <.. UserService : Dependency
-    UserService --> UserRepository : Association
+    UserService --> UserRepository : uses
+    UserService --> HashAlgorithm : uses
+    
+    HashAlgorithm <|.. BCryptHashAlgorithm : implements
+    UserRepository <|.. FileUserRepository : implements
     
     UserService --> UserAlreadyExistsException : throws
     UserService --> UserNotFoundException : throws
     UserService --> InvalidPasswordException : throws
     UserService --> InvalidLoginException : throws
+
 
 ```
 
