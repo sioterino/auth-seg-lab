@@ -64,7 +64,15 @@ public class Main {
 
 	private static String getPasswordInput(String mensagem) {
 		System.out.print(mensagem);
-		return scanner.nextLine();
+
+		Console console = System.console();
+		if (console == null) {
+			return scanner.nextLine();
+		} else {
+			char[] password = console.readPassword();
+			return new String(password);
+		}
+
 	}
 
 	private static void registerUser() {
