@@ -138,4 +138,4 @@ classDiagram
 > ./gradlew installDist
 > 
 > # Para executar a aplicação com o script gerado. Se estiver no windows, use app.bat
-> ./app/build/install/app/bin/app
+> ./build/install/lab2/bin/lab2
