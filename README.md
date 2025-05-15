@@ -45,6 +45,22 @@ Os requisitos arquiteturais do sistema de autenticação de usuários são:
 ``` mermaid
 classDiagram
 
+    class Main {
+        + UserRepository userRepository
+        + HashAlgorithm hash
+        + UserService service
+        + Scanner scanner
+        
+        + main(String[] args) void
+        
+        + getLoginInput() String
+        + getPasswordInput(String mensagem) String
+        
+        + registerUser() void
+        + authenticateUser() void
+        + editPassword() void
+    }
+
     class User {
         - String login
         - String passwordHash
@@ -95,6 +111,8 @@ classDiagram
     class UserNotFoundException
     class InvalidPasswordException
     class InvalidLoginException
+    
+    Main --> UserService : uses
     
     UserService --> UserRepository : uses
     UserService --> HashAlgorithm : uses
