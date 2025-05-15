@@ -2,9 +2,6 @@ package ads.seg.authentication.models;
 
 import org.mindrot.jbcrypt.BCrypt;
 
-/**
- * Classe que implementa um algoritmo de cifragem utilizando a biblioteca BCrypt.
- */
 public class BCryptHashAlgorithm implements HashAlgorithm {
 
 	@Override
